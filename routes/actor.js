@@ -1,9 +1,16 @@
 import express from 'express'
+import ActorModel from '../models/Actors.js'
 
 const routes = express.Router()
 
 routes.get('/all', (req, res) => {
-
+    ActorModel.find({})
+        .then((actors) => {
+            res.json(actors)
+        })
+        .catch((err) => {
+            res.sendStatus(510)
+        })
 })
 
 routes.get('/names', (req, res) => {

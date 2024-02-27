@@ -1,9 +1,16 @@
 import express from 'express'
+import MovieModel from '../models/Movie.js'
 
 const routes = express.Router()
 
 routes.get('/all', (req, res) => {
-
+    MovieModel.find({})
+    .then((movies) => {
+        res.json(movies)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.get('/actors/:filmname', (req, res) => {
