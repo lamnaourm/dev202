@@ -35,7 +35,15 @@ routes.get('/movies', (req, res) => {
 })
 
 routes.post('/add', (req, res) => {
-    
+    const actor = req.body;
+    const newActor = ActorModel(actor)
+    newActor.save()
+        .then((a) => {
+            res.status(201).json(a)
+        })
+        .catch((err) => {
+            res.status(510)
+        })
 })
 
 routes.put('/update/:name', (req, res) => {

@@ -7,6 +7,7 @@ import movie from './routes/movie.js'
 
 dotenv.config()
 const app = express()
+app.use(express.json())
 const port = process.env.PORT || 3000
 const url = process.env.URL_MONGOOSE
 const dbname = process.env.DBNAME
