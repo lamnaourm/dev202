@@ -14,7 +14,13 @@ routes.get('/all', (req, res) => {
 })
 
 routes.get('/names', (req, res) => {
-    
+    DirectorModel.find({},{_id:0, name:1})
+    .then((directors) => {
+        res.json(directors)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.get('/movies', (req, res) => {
