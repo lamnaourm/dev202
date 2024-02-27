@@ -1,5 +1,6 @@
 import express from 'express'
 import DirectorModel from '../models/Director.js'
+import MovieModel from '../models/Movie.js'
 
 const routes = express.Router()
 
@@ -24,7 +25,13 @@ routes.get('/names', (req, res) => {
 })
 
 routes.get('/movies', (req, res) => {
-    
+    MovieModel.aggregate([{$group:{_id:"$director", nb_movies:{$sum:1}}}])
+    .then((directors) => {
+        res.json(directors)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.post('/add', (req, res) => {
