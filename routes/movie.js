@@ -14,15 +14,40 @@ routes.get('/all', (req, res) => {
 })
 
 routes.get('/actors/:filmname', (req, res) => {
-    
+    const name = req.params.filmname
+
+    MovieModel.find({name:name},{_id:0, actors:1})
+    .then((actors) => {
+        res.json(actors[0].actors)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.get('/listcategory/:category', (req, res) => {
-    
+    const category = req.params.category
+
+    MovieModel.aggregate([{$match:{categories:{$eq:category}}}])
+    .then((movies) => {
+        res.json(movies)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.get('/years/:year1/:year2', (req, res) => {
-    
+    const year1 = req.params.year1
+    const year2 = req.params.year2
+
+    MovieModel.find({year:{$gte:year1, $lte:year2}})
+    .then((movies) => {
+        res.json(movies)
+    })
+    .catch((err) => {
+        res.sendStatus(510)
+    })
 })
 
 routes.post('/add', (req, res) => {
